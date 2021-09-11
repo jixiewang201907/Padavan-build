@@ -12,7 +12,7 @@ on:
       modelname:
         description: 'model name'
         required: true
-        default: 'HC5962'
+        default: 'k2p'
   release:
     types: [published]
   push:
@@ -55,7 +55,7 @@ jobs:
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
     - name: Build Firmware
       env:
-        TNAME: ${{ github.event.inputs.modelname }}
+        k2p: ${{ github.event.inputs.modelname }}
       run: |
         cd /opt/rt-n56u/trunk
         if [ ! -f configs/templates/$TNAME.config ] ; then
