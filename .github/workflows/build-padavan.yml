@@ -55,14 +55,14 @@ jobs:
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
     - name: Build Firmware
       env:
-        k2p-5.0: ${{ github.event.inputs.modelname }}
+        k2p: ${{ github.event.inputs.modelname }}
       run: |
         cd /opt/rt-n56u/trunk
-        if [ ! -f configs/templates/$k2p-5.0.config ] ; then
-        echo "configs/templates/$k2p-5.0.config not found "
+        if [ ! -f configs/templates/$k2p.config ] ; then
+        echo "configs/templates/$k2p.config not found "
         exit 1
         fi
-        cp -f configs/templates/$k2p-5.0.config .config
+        cp -f configs/templates/$k2p.config .config
         sed -i 's/CONFIG_FIRMWARE_INCLUDE_OPENSSL_EXE=n/CONFIG_FIRMWARE_INCLUDE_OPENSSL_EXE=y/g' .config
         ################################################################################################
         #因不同型号配置功能不一样，所以先把配置项删除，如果你自己要添加其他的，也要写上删除这一条，切记！！！
@@ -114,7 +114,7 @@ jobs:
         #echo "自定义项=y" >> .config
         #########################################################################################
         sudo ./clear_tree
-        sudo ./build_firmware_modify $k2p-5.0 0
+        sudo ./build_firmware_modify $k2p 0
         sudo mv -f images/*.trx /opt/images/
     - name : Upload packages
       uses: actions/upload-artifact@master
